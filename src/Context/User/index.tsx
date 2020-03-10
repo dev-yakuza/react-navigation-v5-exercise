@@ -31,10 +31,12 @@ const UserContextProvider = ({children}: Props) => {
   const getUserInfo = (): void => {
     AsyncStorage.getItem('token')
       .then(value => {
-        setUserInfo({
-          name: 'dev-yakuza',
-          email: 'dev.yakuza@gamil.com',
-        });
+        if (value) {
+          setUserInfo({
+            name: 'dev-yakuza',
+            email: 'dev.yakuza@gamil.com',
+          });
+        }
       })
       .catch(() => {
         setUserInfo(undefined);
@@ -42,7 +44,8 @@ const UserContextProvider = ({children}: Props) => {
   };
 
   const logout = (): void => {
-    AsyncStorage.clear();
+    AsyncStorage.removeItem('token');
+    setUserInfo(undefined);
   };
 
   useEffect(() => {

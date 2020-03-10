@@ -35,6 +35,7 @@
     "@react-native-community/eslint-config": "0.0.7",
     "@types/react": "16.9.23",
     "@types/react-native": "0.61.20",
+    "@types/react-native-vector-icons": "6.4.5",
     "@types/styled-components": "5.0.1",
     "babel-jest": "25.1.0",
     "babel-plugin-root-import": "6.4.1",

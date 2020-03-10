@@ -1,8 +1,9 @@
 import React, {useContext} from 'react';
-import {UserContext} from '~/Context/User';
-
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  StackHeaderLeftButtonProps,
+} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
@@ -13,7 +14,13 @@ import {
   DrawerItem,
   DrawerContentComponentProps,
   DrawerContentOptions,
+  DrawerNavigationProp,
 } from '@react-navigation/drawer';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+import {UserContext} from '~/Context/User';
+
+import IconButton from '~/Component/IconButton';
 
 import SignIn from './SignIn';
 import SignUp from './SignUp';
@@ -58,10 +65,50 @@ const LoginStackNavi = () => {
   );
 };
 
+type TabFirstStackNavigationProp = DrawerNavigationProp<
+  {
+    TabNavi: undefined;
+    MaterialTabNavi: undefined;
+    MaterialTopTabNavi: undefined;
+    Logout: undefined;
+  },
+  'TabNavi'
+>;
+interface TabFirstStackNaviProps {
+  navigation: TabFirstStackNavigationProp;
+}
+const TabFirstStackNavi = ({navigation}: TabFirstStackNaviProps) => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#f4511e',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}>
+      <Stack.Screen
+        name="TabFirst"
+        component={TabFirst}
+        options={{
+          headerLeft: (props: StackHeaderLeftButtonProps) => (
+            <IconButton
+              iconName="menu"
+              onPress={() => navigation.openDrawer()}
+            />
+          ),
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
 const TabNavi = () => {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="TabFirst" component={TabFirst} />
+      <Tab.Screen name="TabFirstStackNavi" component={TabFirstStackNavi} />
       <Tab.Screen name="TabSecond" component={TabSecond} />
       <Tab.Screen name="TabThird" component={TabThird} />
       <Tab.Screen name="TabFourth" component={TabFourth} />
@@ -69,18 +116,56 @@ const TabNavi = () => {
   );
 };
 
-const MaterailTabNavi = () => {
+const MaterialTabNavi = () => {
   return (
     <MaterialTab.Navigator>
-      <MaterialTab.Screen name="TabFirst" component={TabFirst} />
-      <MaterialTab.Screen name="TabSecond" component={TabSecond} />
-      <MaterialTab.Screen name="TabThird" component={TabThird} />
-      <MaterialTab.Screen name="TabFourth" component={TabFourth} />
+      <MaterialTab.Screen
+        name="TabFirst"
+        component={TabFirst}
+        options={{
+          tabBarColor: '#281b39',
+          tabBarLabel: 'Frist',
+          tabBarIcon: ({color}) => <Icon name="home" color={color} size={26} />,
+        }}
+      />
+      <MaterialTab.Screen
+        name="TabSecond"
+        component={TabSecond}
+        options={{
+          tabBarColor: '#0e141d',
+          tabBarLabel: 'Second',
+          tabBarIcon: ({color}) => (
+            <Icon name="people" color={color} size={26} />
+          ),
+        }}
+      />
+      <MaterialTab.Screen
+        name="TabThird"
+        component={TabThird}
+        options={{
+          tabBarColor: '#E64A19',
+          tabBarLabel: 'Third',
+          tabBarIcon: ({color}) => (
+            <Icon name="message" color={color} size={26} />
+          ),
+        }}
+      />
+      <MaterialTab.Screen
+        name="TabFourth"
+        component={TabFourth}
+        options={{
+          tabBarColor: '#524365',
+          tabBarLabel: 'Fourth',
+          tabBarIcon: ({color}) => (
+            <Icon name="settings" color={color} size={26} />
+          ),
+        }}
+      />
     </MaterialTab.Navigator>
   );
 };
 
-const MaterailTopTabNavi = () => {
+const MaterialTopTabNavi = () => {
   return (
     <MaterailTopTab.Navigator>
       <MaterailTopTab.Screen name="TabFirst" component={TabFirst} />
@@ -109,8 +194,8 @@ const DrawNavi = () => {
     <Drawer.Navigator
       drawerContent={props => CustomDrawerContent(props, logout)}>
       <Drawer.Screen name="TabNavi" component={TabNavi} />
-      <Drawer.Screen name="MaterailTabNavi" component={MaterailTabNavi} />
-      <Drawer.Screen name="MaterailTopTabNavi" component={MaterailTopTabNavi} />
+      <Drawer.Screen name="MaterialTabNavi" component={MaterialTabNavi} />
+      <Drawer.Screen name="MaterialTopTabNavi" component={MaterialTopTabNavi} />
     </Drawer.Navigator>
   );
 };

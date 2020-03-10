@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Styled from 'styled-components/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
+import {UserContext} from '~/Context/User';
 import Button from '~/Component/Button';
 
 const Container = Styled.View`
@@ -21,9 +22,16 @@ interface Props {
   navigation: NavigationProp;
 }
 const SignIn = ({navigation}: Props) => {
+  const {login} = useContext<IUserContext>(UserContext);
+
   return (
     <Container>
       <Label>This is SignIn Screen</Label>
+      <Button
+        label="SignIn"
+        onPress={() => login('dev.yakuza@gamil.com', 'password')}
+      />
+
       <ButtonContainer>
         <Button label="SignUp" onPress={() => navigation.navigate('SignUp')} />
         <Button

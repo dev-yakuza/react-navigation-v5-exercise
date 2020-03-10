@@ -9,13 +9,13 @@ const Container = Styled.View`
 
 const Label = Styled.Text``;
 
-const FirstScreen = () => {
+const TabFourth = () => {
   return (
     <Container
       style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Label>This is First Screen</Label>
+      <Label>This is Fourth Tab</Label>
     </Container>
   );
 };
 
-export default FirstScreen;
+export default TabFourth;

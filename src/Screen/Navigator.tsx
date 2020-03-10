@@ -274,7 +274,6 @@ const MainNavi = () => {
 export default () => {
   const {userInfo} = useContext<IUserContext>(UserContext);
 
-  console.log(userInfo);
   return (
     <NavigationContainer>
       {userInfo ? <MainNavi /> : <LoginStackNavi />}

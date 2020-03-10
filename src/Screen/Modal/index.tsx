@@ -9,12 +9,12 @@ const Container = Styled.View`
 
 const Label = Styled.Text``;
 
-const ResetPassword = () => {
+const Modal = () => {
   return (
     <Container>
-      <Label>This is ResetPassword Screen</Label>
+      <Label>Modal!</Label>
     </Container>
   );
 };
 
-export default ResetPassword;
+export default Modal;

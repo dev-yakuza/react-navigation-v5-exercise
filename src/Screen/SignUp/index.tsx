@@ -11,8 +11,7 @@ const Label = Styled.Text``;
 
 const SignUp = () => {
   return (
-    <Container
-      style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <Container>
       <Label>This is SignUp Screen</Label>
     </Container>
   );

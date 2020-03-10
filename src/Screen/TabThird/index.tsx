@@ -11,8 +11,7 @@ const Label = Styled.Text``;
 
 const TabThird = () => {
   return (
-    <Container
-      style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <Container>
       <Label>This is Third Tab</Label>
     </Container>
   );

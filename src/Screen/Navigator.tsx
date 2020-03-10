@@ -29,12 +29,26 @@ import TabFirst from './TabFirst';
 import TabSecond from './TabSecond';
 import TabThird from './TabThird';
 import TabFourth from './TabFourth';
+import Modal from './Modal';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 const MaterialTab = createMaterialBottomTabNavigator();
 const MaterailTopTab = createMaterialTopTabNavigator();
+
+type TypeDrawerProp = DrawerNavigationProp<
+  {
+    TabNavi: undefined;
+    MaterialTabNavi: undefined;
+    MaterialTopTabNaviStackNavi: undefined;
+    Logout: undefined;
+  },
+  'TabNavi'
+>;
+interface DrawerProp {
+  navigation: TypeDrawerProp;
+}
 
 const LoginStackNavi = () => {
   return (
@@ -65,19 +79,7 @@ const LoginStackNavi = () => {
   );
 };
 
-type TabFirstStackNavigationProp = DrawerNavigationProp<
-  {
-    TabNavi: undefined;
-    MaterialTabNavi: undefined;
-    MaterialTopTabNavi: undefined;
-    Logout: undefined;
-  },
-  'TabNavi'
->;
-interface TabFirstStackNaviProps {
-  navigation: TabFirstStackNavigationProp;
-}
-const TabFirstStackNavi = ({navigation}: TabFirstStackNaviProps) => {
+const TabFirstStackNavi = ({navigation}: DrawerProp) => {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -101,6 +103,7 @@ const TabFirstStackNavi = ({navigation}: TabFirstStackNaviProps) => {
           ),
         }}
       />
+      <Stack.Screen name="Modal" component={Modal} />
     </Stack.Navigator>
   );
 };
@@ -108,10 +111,44 @@ const TabFirstStackNavi = ({navigation}: TabFirstStackNaviProps) => {
 const TabNavi = () => {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="TabFirstStackNavi" component={TabFirstStackNavi} />
-      <Tab.Screen name="TabSecond" component={TabSecond} />
-      <Tab.Screen name="TabThird" component={TabThird} />
-      <Tab.Screen name="TabFourth" component={TabFourth} />
+      <Tab.Screen
+        name="TabFirstStackNavi"
+        component={TabFirstStackNavi}
+        options={{
+          tabBarLabel: 'Frist',
+          tabBarIcon: ({color}) => <Icon name="home" color={color} size={26} />,
+        }}
+      />
+      <Tab.Screen
+        name="TabSecond"
+        component={TabSecond}
+        options={{
+          tabBarLabel: 'Second',
+          tabBarIcon: ({color}) => (
+            <Icon name="people" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="TabThird"
+        component={TabThird}
+        options={{
+          tabBarLabel: 'Third',
+          tabBarIcon: ({color}) => (
+            <Icon name="message" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="TabFourth"
+        component={TabFourth}
+        options={{
+          tabBarLabel: 'Fourth',
+          tabBarIcon: ({color}) => (
+            <Icon name="settings" color={color} size={26} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };
@@ -120,8 +157,8 @@ const MaterialTabNavi = () => {
   return (
     <MaterialTab.Navigator>
       <MaterialTab.Screen
-        name="TabFirst"
-        component={TabFirst}
+        name="TabFirstStackNavi"
+        component={TabFirstStackNavi}
         options={{
           tabBarColor: '#281b39',
           tabBarLabel: 'Frist',
@@ -176,6 +213,23 @@ const MaterialTopTabNavi = () => {
   );
 };
 
+const MaterialTopTabNaviStackNavi = ({navigation}: DrawerProp) => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerLeft: (props: StackHeaderLeftButtonProps) => (
+          <IconButton
+            iconName="menu"
+            onPress={() => navigation.openDrawer()}
+            color="black"
+          />
+        ),
+      }}>
+      <Stack.Screen name="MaterialTopTabNavi" component={MaterialTopTabNavi} />
+    </Stack.Navigator>
+  );
+};
+
 const CustomDrawerContent = (
   props: DrawerContentComponentProps<DrawerContentOptions>,
   logout: () => void,
@@ -195,18 +249,35 @@ const DrawNavi = () => {
       drawerContent={props => CustomDrawerContent(props, logout)}>
       <Drawer.Screen name="TabNavi" component={TabNavi} />
       <Drawer.Screen name="MaterialTabNavi" component={MaterialTabNavi} />
-      <Drawer.Screen name="MaterialTopTabNavi" component={MaterialTopTabNavi} />
+      <Drawer.Screen
+        name="MaterialTopTabNaviStackNavi"
+        component={MaterialTopTabNaviStackNavi}
+      />
     </Drawer.Navigator>
   );
 };
 
+const MainNavi = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="DrawNavi"
+        component={DrawNavi}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen name="FullModal" component={Modal} />
+    </Stack.Navigator>
+  );
+};
 export default () => {
   const {userInfo} = useContext<IUserContext>(UserContext);
 
   console.log(userInfo);
   return (
     <NavigationContainer>
-      {userInfo ? <DrawNavi /> : <LoginStackNavi />}
+      {userInfo ? <MainNavi /> : <LoginStackNavi />}
     </NavigationContainer>
   );
 };

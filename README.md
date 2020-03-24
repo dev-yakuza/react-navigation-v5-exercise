@@ -1,7 +1,7 @@
 # document
 
 - [react-navigation-v5-exercise document](#react-navigation-v5-exercise-document)
-- [react-navigation-v5-exerciseドキュメン](#react-navigation-v5-exerciseドキュメン)
+- [react-navigation-v5-exerciseドキュメント](#react-navigation-v5-exerciseドキュメント)
 - [react-navigation-v5-exercise 문서](#react-navigation-v5-exercise-문서)
 
 ## react-navigation-v5-exercise document
